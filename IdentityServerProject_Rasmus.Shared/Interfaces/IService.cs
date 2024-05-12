@@ -6,9 +6,9 @@ public interface IService<T> where T : class
 
     public Task<T> GetByIdAsync(Guid id);
 
-    public Task<T> CreateAsync(T entity);
+    public Task<bool> CreateAsync(T entity);
 
     public Task<T> UpdateAsync(T entity);
 
-    public Task<T> DeleteByIdAsync(Guid id);
+    public Task<bool> DeleteByIdAsync(Guid id);
 }

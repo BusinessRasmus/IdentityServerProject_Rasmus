@@ -6,6 +6,5 @@ builder.Services.AddScoped<MongoDbContext>();
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
 
 app.Run();

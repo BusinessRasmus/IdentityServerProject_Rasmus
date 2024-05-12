@@ -25,18 +25,24 @@ public class ShopProductRepository(MongoDbContext mongoDbContext) : IService<Sho
         return await _mongoDbContext.BaseProducts.Find(filter).FirstOrDefaultAsync();
     }
 
-    public Task<ShopProduct> CreateAsync(ShopProduct entity)
+    public async Task<bool> CreateAsync(ShopProduct entity)
     {
         throw new NotImplementedException(); //TODO Implement methods
     }
 
-    public Task<ShopProduct> UpdateAsync(ShopProduct entity)
+    public async Task<ShopProduct> UpdateAsync(ShopProduct entity)
     {
+
         throw new NotImplementedException();
     }
 
-    public Task<ShopProduct> DeleteByIdAsync(Guid id)
+    public async Task<bool> DeleteByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var filter = Builders<ShopProduct>.Filter.Eq(x => x.Id, id);
+
+        await _mongoDbContext.BaseProducts.DeleteOneAsync(filter);
+
+        return true;
+
     }
 }
