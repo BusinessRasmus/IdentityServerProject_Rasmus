@@ -1,6 +1,8 @@
-﻿using IdentityServerProject_Rasmus.DataAccess.Database;
+﻿using System.Runtime.InteropServices.ComTypes;
+using IdentityServerProject_Rasmus.DataAccess.Database;
 using IdentityServerProject_Rasmus.Shared.Entities;
 using IdentityServerProject_Rasmus.Shared.Interfaces;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
 namespace IdentityServerProject_Rasmus.DataAccess.Repositories;
@@ -27,13 +29,21 @@ public class ShopProductRepository(MongoDbContext mongoDbContext) : IService<Sho
 
     public async Task<bool> CreateAsync(ShopProduct entity)
     {
+        await _mongoDbContext.BaseProducts.InsertOneAsync(entity);
+
         throw new NotImplementedException(); //TODO Implement methods
     }
 
     public async Task<ShopProduct> UpdateAsync(ShopProduct entity)
     {
+        var filter = Builders<ShopProduct>.Filter.Eq(x => x.Id, entity.Id);
 
-        throw new NotImplementedException();
+        var update = Builders<ShopProduct>.Update
+            .Set(d => d, entity);
+
+        await _mongoDbContext.BaseProducts.UpdateOneAsync(filter, update);
+
+        return await GetByIdAsync(entity.Id);
     }
 
     public async Task<bool> DeleteByIdAsync(Guid id)

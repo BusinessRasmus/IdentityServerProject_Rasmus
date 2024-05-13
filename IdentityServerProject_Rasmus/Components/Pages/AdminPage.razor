@@ -1,0 +1,11 @@
+﻿@page "/AdminPage"
+@using Microsoft.AspNetCore.Authorization
+@rendermode InteractiveServer
+@attribute [Authorize (Roles = "SupremeUser")]
+
+
+<h3>AdminPage</h3>
+
+@code {
+	
+}

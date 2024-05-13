@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServerProject_Rasmus", "IdentityServerProject_Rasmus\IdentityServerProject_Rasmus.csproj", "{3DDF17F8-341E-4186-810E-29112BC3245A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServerProject_Rasmus", "IdentityServerProject_Rasmus\IdentityServerProject_Rasmus.csproj", "{3DDF17F8-341E-4186-810E-29112BC3245A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServerProject_Rasmus.API", "IdentityServerProject_Rasmus.API\IdentityServerProject_Rasmus.API.csproj", "{3DEDAEFC-ECA6-4BDC-AE3B-4E1898700325}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServerProject_Rasmus.API", "IdentityServerProject_Rasmus.API\IdentityServerProject_Rasmus.API.csproj", "{3DEDAEFC-ECA6-4BDC-AE3B-4E1898700325}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServerProject_Rasmus.DataAccess", "IdentityServerProject_Rasmus.DataAccess\IdentityServerProject_Rasmus.DataAccess.csproj", "{ACBABBA2-F442-40A2-98F5-D508589D51C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServerProject_Rasmus.DataAccess", "IdentityServerProject_Rasmus.DataAccess\IdentityServerProject_Rasmus.DataAccess.csproj", "{ACBABBA2-F442-40A2-98F5-D508589D51C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServerProject_Rasmus.Shared", "IdentityServerProject_Rasmus.Shared\IdentityServerProject_Rasmus.Shared.csproj", "{63F824EE-D995-474E-A4F5-76C7C996B05F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServerProject_Rasmus.Shared", "IdentityServerProject_Rasmus.Shared\IdentityServerProject_Rasmus.Shared.csproj", "{63F824EE-D995-474E-A4F5-76C7C996B05F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{AFA2145A-B2EF-451A-9C80-7ACDC0F259FB}"
 EndProject
@@ -45,6 +45,7 @@ Global
 		{3DDF17F8-341E-4186-810E-29112BC3245A} = {8D0EB307-BB3C-493D-A527-E03B40E79E9E}
 		{3DEDAEFC-ECA6-4BDC-AE3B-4E1898700325} = {AFA2145A-B2EF-451A-9C80-7ACDC0F259FB}
 		{ACBABBA2-F442-40A2-98F5-D508589D51C7} = {AFA2145A-B2EF-451A-9C80-7ACDC0F259FB}
+		{63F824EE-D995-474E-A4F5-76C7C996B05F} = {8D0EB307-BB3C-493D-A527-E03B40E79E9E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E0FE80DC-77ED-401D-B3F9-3E01D1BE242B}
