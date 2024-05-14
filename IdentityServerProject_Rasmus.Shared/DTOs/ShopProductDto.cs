@@ -13,6 +13,4 @@ public class ShopProductDto
     public decimal Price { get; set; }
 
     public string ImageUrl { get; set; }
-
-    public ProductCategoryDto Category { get; set; }
 }

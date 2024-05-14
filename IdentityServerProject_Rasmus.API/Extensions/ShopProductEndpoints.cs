@@ -41,11 +41,7 @@ public static class ShopProductEndpoints
             Name = entity.Name,
             Description = entity.Description,
             Price = entity.Price,
-            ImageUrl = entity.ImageUrl,
-            Category = new ProductCategory
-            {
-                Name = entity.Category.Name,
-            }
+            ImageUrl = entity.ImageUrl
         };
 
         return await repository.CreateAsync(newProduct);

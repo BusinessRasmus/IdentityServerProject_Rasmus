@@ -14,4 +14,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IdentityServerProject_Rasmus.Shared\IdentityServerProject_Rasmus.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

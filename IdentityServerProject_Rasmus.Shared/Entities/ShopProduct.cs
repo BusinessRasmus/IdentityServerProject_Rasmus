@@ -12,5 +12,4 @@ public class ShopProduct
 
     public string ImageUrl { get; set; }
 
-    public ProductCategory Category { get; set; }
 }

@@ -5,6 +5,9 @@ namespace IdentityServerProject_Rasmus.Data
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+        public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
+        public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+        public virtual ICollection<IdentityUserToken<string>> Tokens { get; set; }
         public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
     }
 
@@ -18,7 +21,7 @@ namespace IdentityServerProject_Rasmus.Data
 
     public class ApplicationRole : IdentityRole
     {
-        public virtual ICollection<ApplicationUserRole> Roles { get; set; }
+        public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
     }
 
 }

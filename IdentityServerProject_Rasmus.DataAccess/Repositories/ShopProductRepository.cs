@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices.ComTypes;
+﻿using System;
+using System.Runtime.InteropServices.ComTypes;
 using IdentityServerProject_Rasmus.DataAccess.Database;
 using IdentityServerProject_Rasmus.Shared.Entities;
 using IdentityServerProject_Rasmus.Shared.Interfaces;
@@ -16,7 +17,7 @@ public class ShopProductRepository(MongoDbContext mongoDbContext) : IService<Sho
     {
         var filter = Builders<ShopProduct>.Filter.Empty;
 
-        return await _mongoDbContext.BaseProducts.Find(filter).ToListAsync();
+        return await _mongoDbContext.ShopProducts.Find(filter).ToListAsync();
     }
     
 
@@ -24,14 +25,16 @@ public class ShopProductRepository(MongoDbContext mongoDbContext) : IService<Sho
     {
         var filter = Builders<ShopProduct>.Filter.Eq(x => x.Id, id);
 
-        return await _mongoDbContext.BaseProducts.Find(filter).FirstOrDefaultAsync();
+        return await _mongoDbContext.ShopProducts.Find(filter).FirstOrDefaultAsync();
     }
 
     public async Task<bool> CreateAsync(ShopProduct entity)
     {
-        await _mongoDbContext.BaseProducts.InsertOneAsync(entity);
+        await _mongoDbContext.ShopProducts.InsertOneAsync(entity);
 
-        throw new NotImplementedException(); //TODO Implement methods
+        //TODO Implement guard clauses
+
+        return true;
     }
 
     public async Task<ShopProduct> UpdateAsync(ShopProduct entity)
@@ -41,7 +44,7 @@ public class ShopProductRepository(MongoDbContext mongoDbContext) : IService<Sho
         var update = Builders<ShopProduct>.Update
             .Set(d => d, entity);
 
-        await _mongoDbContext.BaseProducts.UpdateOneAsync(filter, update);
+        await _mongoDbContext.ShopProducts.UpdateOneAsync(filter, update);
 
         return await GetByIdAsync(entity.Id);
     }
@@ -50,7 +53,7 @@ public class ShopProductRepository(MongoDbContext mongoDbContext) : IService<Sho
     {
         var filter = Builders<ShopProduct>.Filter.Eq(x => x.Id, id);
 
-        await _mongoDbContext.BaseProducts.DeleteOneAsync(filter);
+        await _mongoDbContext.ShopProducts.DeleteOneAsync(filter);
 
         return true;
 
