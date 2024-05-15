@@ -1,11 +1,82 @@
 ﻿@page "/AdminPage"
 @using Microsoft.AspNetCore.Authorization
+@using IdentityServerProject_Rasmus.Shared.Interfaces
+@using IdentityServerProject_Rasmus.Shared.DTOs
 @rendermode InteractiveServer
-@attribute [Authorize (Roles = "SupremeUser")]
+@inject IService<ShopProductDto> ProductService
+@inject IService<UserCartDto> UserCartService
+@attribute [Authorize(Roles = "SupremeUser")]
 
 
 <h3>AdminPage</h3>
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Products</h4>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @if (ShopProducts != null)
+                {
+                    <Virtualize Items="ShopProducts">
+                        <tr>
+                            <td>@context.Id</td>
+                            <td>@context.Name</td>
+                            <td>@context.Price</td>
+                            <td><img src="@context.ImageUrl" alt="(@context.Name+'jpg')" width="50" height="50"/></td>
+                            <td>
+                                <button class="btn btn-primary">Edit</button>
+                                <button class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    </Virtualize>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<EditForm Model="ShopProduct" FormName="add-product" OnValidSubmit="AddNewProduct">
+    <InputText @bind-Value="ShopProduct.Name" />
+    <InputNumber TValue="decimal" @bind-Value="ShopProduct.Price" />
+    <InputText @bind-Value="ShopProduct.ImageUrl" />
+    <button type="submit" class="btn btn-primary">Add Product</button>
+</EditForm>
+
+
+
+
 @code {
-	
+
+    private List<ShopProductDto> ShopProducts { get; set; }
+    private List<UserCartDto> UserCarts { get; set; }
+    private ShopProductDto ShopProduct { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var allProducts = await ProductService.GetAllAsync();
+        ShopProducts = allProducts.ToList();
+
+        var allCarts = await UserCartService.GetAllAsync();
+        UserCarts = allCarts.ToList();
+    }
+
+
+    private void AddNewProduct()
+    {
+        ProductService.CreateAsync(ShopProduct);
+
+
+    }
+
 }

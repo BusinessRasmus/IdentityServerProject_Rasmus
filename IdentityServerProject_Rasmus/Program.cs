@@ -1,6 +1,10 @@
+using IdentityServerProject_Rasmus.API.Services;
 using IdentityServerProject_Rasmus.Components;
 using IdentityServerProject_Rasmus.Components.Account;
 using IdentityServerProject_Rasmus.Data;
+using IdentityServerProject_Rasmus.Services;
+using IdentityServerProject_Rasmus.Shared.DTOs;
+using IdentityServerProject_Rasmus.Shared.Interfaces;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +19,10 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
+
+builder.Services.AddScoped<IService<ShopProductDto>, ShopProductService>();
+builder.Services.AddScoped<IService<UserCartDto>, UserCartService>();
+builder.Services.AddScoped<UserTrackerService>();
 
 builder.Services.AddHttpClient("IdentityServerMongoDbAPI", client =>
 {

@@ -1,7 +1,52 @@
 ﻿@page "/"
+@using IdentityServerProject_Rasmus.Shared.DTOs
+@using IdentityServerProject_Rasmus.Shared.Interfaces
+@rendermode InteractiveServer
+@inject IService<ShopProductDto> ProductService
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+@code
+{
+    public List<ShopProductDto> ShopProducts { get; set; }
+
+    protected override async void OnInitialized()
+    {
+        var allProducts = await ProductService.GetAllAsync();
+
+        if (allProducts.ToList().Count < 1)
+        {
+            var placeholderProducts = new List<ShopProductDto>
+            {
+                new ShopProductDto
+                {
+                    Name = "Product 1",
+                    Price = 100,
+                    ImageUrl = "https://via.placeholder.com/150"
+                },
+                new ShopProductDto
+                {
+                    
+                    Name = "Product 2",
+                    Price = 200,
+                    ImageUrl = "https://via.placeholder.com/150"
+                },
+                new ShopProductDto
+                {
+                    Name = "Product 3",
+                    Price = 300,
+                    ImageUrl = "https://via.placeholder.com/150"
+                }
+            };
+
+            foreach (var product in placeholderProducts)
+            {
+                await ProductService.CreateAsync(product);
+            }
+        }
+    }
+}

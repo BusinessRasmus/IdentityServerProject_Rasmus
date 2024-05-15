@@ -1,6 +1,7 @@
 ﻿using IdentityServerProject_Rasmus.Shared.DTOs;
 using IdentityServerProject_Rasmus.Shared.Entities;
 using IdentityServerProject_Rasmus.Shared.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityServerProject_Rasmus.API.Extensions;
 
@@ -22,8 +23,9 @@ public static class ShopProductEndpoints
 
     }
 
-    public static async Task<IEnumerable<ShopProduct>> GetAllAsync(IService<ShopProduct> repository)
+    public static async Task<IEnumerable<ShopProduct>> GetAllAsync([FromServices]IService<ShopProduct> repository)
     {
+        
         var allProducts = await repository.GetAllAsync();
         return allProducts;
     }

@@ -1,0 +1,62 @@
+﻿@page "/cart"
+@using IdentityServerProject_Rasmus.Shared.DTOs
+@using IdentityServerProject_Rasmus.Shared.Interfaces
+@using IdentityServerProject_Rasmus.Services
+@rendermode InteractiveServer
+@inject IService<ShopProductDto> ProductService
+@inject IService<UserCartDto> UserCartService
+@inject UserTrackerService UserTrackerService
+@attribute [StreamRendering]
+
+<PageTitle>Cart</PageTitle>
+
+<h1>Cart</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Products</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Image</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @if (UserCart != null)
+                {
+                    <Virtualize Items="UserCart">
+                        <tr>
+                            <td>@context.Id</td>
+                            <td>@context.Name</td>
+                            <td>@context.Price</td>
+                            <td><img src="@context.ImageUrl" alt="(@context.Name+'jpg')" width="50" height="50"/></td>
+                            <td>
+                                <button class="btn btn-primary">Edit</button>
+                                <button class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    </Virtualize>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<ShopProductDto>? UserCart { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var allProducts = UserTrackerService.UserCart;
+
+        UserCart = allProducts;
+    }
+
+
+}

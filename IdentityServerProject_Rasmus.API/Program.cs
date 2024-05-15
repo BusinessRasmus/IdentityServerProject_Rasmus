@@ -1,3 +1,4 @@
+using IdentityServerProject_Rasmus.API.Extensions;
 using IdentityServerProject_Rasmus.DataAccess.Database;
 using IdentityServerProject_Rasmus.DataAccess.Repositories;
 using IdentityServerProject_Rasmus.Shared.DTOs;
@@ -8,9 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<MongoDbContext>();
 builder.Services.AddScoped<IService<ShopProduct>, ShopProductRepository>();
+builder.Services.AddScoped<IService<UserCart>, UserCartRepository>();
 
 
 var app = builder.Build();
 
+
+app.MapShopProductEndpoints();
+app.MapUserCartEndpoints();
 
 app.Run();
