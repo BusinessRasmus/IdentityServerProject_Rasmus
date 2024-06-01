@@ -1,6 +1,8 @@
-﻿@implements IDisposable
+﻿@using IdentityServerProject_Rasmus.API.Services
+@implements IDisposable
 
 @inject NavigationManager NavigationManager
+@inject UserInfoService UserInfoService
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -47,7 +49,7 @@
                     <form action="Account/Logout" method="post">
                         <AntiforgeryToken />
                         <input type="hidden" name="ReturnUrl" value="@currentUrl" />
-                        <button type="submit" class="nav-link">
+                        <button type="submit" class="nav-link" @onclick="ClearUsercart">
                             <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
                         </button>
                     </form>
@@ -88,5 +90,12 @@
     {
         NavigationManager.LocationChanged -= OnLocationChanged;
     }
+
+    public void ClearUsercart()
+    {
+        if (UserInfoService.UserCart != null)
+            UserInfoService.UserCart.ShopProducts.Clear();
+    }
+
 }
 

@@ -39,11 +39,7 @@ public static class UserCartEndpoints
 
     private static async Task<UserCart> UpdateAsync(IService<UserCart, string> repository, UserCart entity)
     {
-        var cartToUpdate = await repository.GetByIdAsync(entity.UserEmail);
-
-        var updatedCart = await repository.UpdateAsync(cartToUpdate);
-
-        return updatedCart;
+        return await repository.UpdateAsync(entity);
     }
 
     private static async Task<bool> DeleteByIdAsync(IService<UserCart, string> repository, Guid id)

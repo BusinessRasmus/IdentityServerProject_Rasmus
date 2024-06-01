@@ -54,6 +54,46 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+        var roles = new[] { "SupremeUser", "CasualUser" };
+        foreach (var role in roles)
+        {
+            if (!await roleManager.RoleExistsAsync(role))
+            {
+                await roleManager.CreateAsync(new ApplicationRole
+                {
+                    Name = role
+                });
+            }
+        }
+    }
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+        string email = "niklas@yahoo.com";
+        string password = "Hej1234.";
+
+            if (await userManager.FindByEmailAsync("niklas@yahoo.com") == null)
+            {
+                var user = new ApplicationUser()
+                {
+                    UserName = email,
+                    Email = email,
+                    EmailConfirmed = true
+                };
+
+                await userManager.CreateAsync(user, password);
+                await userManager.AddToRoleAsync(user, "SupremeUser");
+            }
+        
+    }
+
+
 }
 else
 {

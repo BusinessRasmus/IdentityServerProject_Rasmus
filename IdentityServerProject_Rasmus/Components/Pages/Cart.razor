@@ -49,14 +49,28 @@
 </div>
 
 @code {
-    private List<ShopProductDto>? UserCart { get; set; }
+    private List<ShopProductDto>? UserCart { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
         var userId = await UserInfoService.GetLoggedInUserEmail();
         var foundCart = await UserCartService.GetByIdAsync(userId);
 
-        UserCart.AddRange(foundCart.ShopProducts);
+        if (foundCart == null)
+        {
+            var newCart = new UserCartDto()
+            {
+                ShopProducts = new List<ShopProductDto>(),
+                UserEmail = userId
+            };
+            await UserCartService.CreateAsync(newCart);
+        }
+        else
+        {
+            UserCart.AddRange(foundCart.ShopProducts);
+        }
+
+        
 
     }
 

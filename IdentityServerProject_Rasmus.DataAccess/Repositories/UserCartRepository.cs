@@ -40,7 +40,7 @@ public class UserCartRepository(MongoDbContext mongoDbContext) : IService<UserCa
         var filter = Builders<UserCart>.Filter.Eq(x => x.Id, entity.Id);
 
         var update = Builders<UserCart>.Update
-            .Set(d => d, entity);
+            .Set(d => d.ShopProducts, entity.ShopProducts);
 
         await _mongoDbContext.Carts.UpdateOneAsync(filter, update);
 

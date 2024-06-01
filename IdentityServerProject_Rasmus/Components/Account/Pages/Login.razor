@@ -100,11 +100,6 @@
             Logger.LogInformation("User logged in.");
             RedirectManager.RedirectTo(ReturnUrl);
 
-            //------------------- //TODO Se om detta funkar.
-            var userCart = await UserCartService.GetByIdAsync(await UserInfoService.GetLoggedInUserEmail());
-            UserInfoService.UserCart.AddRange(userCart.ShopProducts);
-            //-------------------
-
         }
         else if (result.RequiresTwoFactor)
         {

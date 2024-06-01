@@ -6,7 +6,7 @@ namespace IdentityServerProject_Rasmus.API.Services;
 public class UserInfoService(AuthenticationStateProvider authState)
 {
 
-    public List<ShopProductDto> UserCart { get; set; }
+    public UserCartDto? UserCart { get; set; }
 
     public async Task<string> GetLoggedInUserEmail()
     {

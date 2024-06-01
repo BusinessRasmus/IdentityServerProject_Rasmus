@@ -19,6 +19,6 @@ public class MongoDbContext
 
     public IMongoCollection<ShopProduct> ShopProducts => _mongoDatabase.GetCollection<ShopProduct>("ShopProducts");
 
-    public IMongoCollection<UserCart> Carts => _mongoDatabase.GetCollection<UserCart>("ProductCategories");
+    public IMongoCollection<UserCart> Carts => _mongoDatabase.GetCollection<UserCart>("Carts");
 
 }

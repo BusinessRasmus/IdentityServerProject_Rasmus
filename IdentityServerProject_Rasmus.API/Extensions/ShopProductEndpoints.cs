@@ -23,20 +23,20 @@ public static class ShopProductEndpoints
 
     }
 
-    public static async Task<IEnumerable<ShopProduct>> GetAllAsync([FromServices]IService<ShopProduct> repository)
+    public static async Task<IEnumerable<ShopProduct>> GetAllAsync([FromServices]IService<ShopProduct, Guid> repository)
     {
         
         var allProducts = await repository.GetAllAsync();
         return allProducts;
     }
 
-    public static async Task<ShopProduct> GetByIdAsync(IService<ShopProduct> repository, Guid id)
+    public static async Task<ShopProduct> GetByIdAsync(IService<ShopProduct, Guid> repository, Guid id)
     {
         var product = await repository.GetByIdAsync(id);
         return product;
     }
 
-    public static async Task<bool> CreateAsync(IService<ShopProduct> repository, ShopProductDto entity)
+    public static async Task<bool> CreateAsync(IService<ShopProduct, Guid> repository, ShopProductDto entity)
     {
         var newProduct = new ShopProduct
         {
@@ -50,7 +50,7 @@ public static class ShopProductEndpoints
 
     }
 
-    public static async Task<ShopProduct> UpdateAsync(IService<ShopProduct> repository, ShopProductDto entity)
+    public static async Task<ShopProduct> UpdateAsync(IService<ShopProduct, Guid> repository, ShopProductDto entity)
     {
         var shopProductToUpdate = await repository.GetByIdAsync(entity.Id);
 
@@ -59,7 +59,7 @@ public static class ShopProductEndpoints
         return updatedShopProduct;
     }
 
-    public static async Task<bool> DeleteByIdAsync(IService<ShopProduct> repository, Guid id)
+    public static async Task<bool> DeleteByIdAsync(IService<ShopProduct, Guid> repository, Guid id)
     {
         return await repository.DeleteByIdAsync(id);
     }

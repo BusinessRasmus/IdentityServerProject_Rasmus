@@ -47,9 +47,9 @@
 </div>
 
 <EditForm Model="ShopProduct" FormName="add-product" OnValidSubmit="AddNewProduct">
-    <InputText @bind-Value="ShopProduct.Name" />
-    <InputNumber TValue="decimal" @bind-Value="ShopProduct.Price" />
-    <InputText @bind-Value="ShopProduct.ImageUrl" />
+    <InputText @bind-Value="@ShopProduct.Name" />
+    <InputNumber TValue="decimal" @bind-Value="@ShopProduct.Price" />
+    <InputText @bind-Value="@ShopProduct.ImageUrl" />
     <button type="submit" class="btn btn-primary">Add Product</button>
 </EditForm>
 
@@ -58,9 +58,9 @@
 
 @code {
 
-    private List<ShopProductDto> ShopProducts { get; set; }
-    private List<UserCartDto> UserCarts { get; set; }
-    private ShopProductDto ShopProduct { get; set; }
+    private List<ShopProductDto> ShopProducts { get; set; } = new();
+    private List<UserCartDto> UserCarts { get; set; } = new();
+    private ShopProductDto ShopProduct { get; set; } = new ();
 
     protected override async Task OnInitializedAsync()
     {

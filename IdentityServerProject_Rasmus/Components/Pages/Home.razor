@@ -11,7 +11,7 @@
 @inject IService<UserCartDto, string> UserCartService
 @inject UserInfoService UserInfoService
 @inject AuthenticationStateProvider AuthState
-@attribute [Authorize(Roles = "SupremeUser")]
+@attribute [Authorize]
 
 <PageTitle>Hello</PageTitle>
 
@@ -62,9 +62,25 @@ Welcome to your new app.
 
     
 
-    private void AddToCart()
+    private async Task AddToCart()
     {
-        UserInfoService.UserCart.Add(ShopProducts.First());
-        UserCartService.UpdateAsync()
+        var loggedInUserCart = await UserCartService.GetByIdAsync(_loggedInUser);
+
+        if (loggedInUserCart == null)
+        {
+            loggedInUserCart = new UserCartDto
+            {
+                UserEmail = _loggedInUser,
+                ShopProducts = new List<ShopProductDto>()
+            };
+
+            await UserCartService.CreateAsync(loggedInUserCart);
+        }
+
+        loggedInUserCart.ShopProducts.Add(ShopProducts.First());
+       
+        await UserCartService.UpdateAsync(loggedInUserCart);
+        }
+        
     }
 }
