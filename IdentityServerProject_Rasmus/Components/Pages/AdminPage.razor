@@ -3,8 +3,8 @@
 @using IdentityServerProject_Rasmus.Shared.Interfaces
 @using IdentityServerProject_Rasmus.Shared.DTOs
 @rendermode InteractiveServer
-@inject IService<ShopProductDto> ProductService
-@inject IService<UserCartDto> UserCartService
+@inject IService<ShopProductDto, Guid> ProductService
+@inject IService<UserCartDto, string> UserCartService
 @attribute [Authorize(Roles = "SupremeUser")]
 
 

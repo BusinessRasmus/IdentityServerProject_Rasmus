@@ -18,35 +18,35 @@ public static class UserCartEndpoints
         return app;
     }
 
-    private static async Task<IEnumerable<UserCart>> GetAllAsync(IService<UserCart> repository)
+    private static async Task<IEnumerable<UserCart>> GetAllAsync(IService<UserCart, string> repository)
     {
         var allCarts = await repository.GetAllAsync();
 
         return allCarts;
     }
 
-    private static async Task<UserCart> GetByUserIdAsync(IService<UserCart> repository, Guid id)
+    private static async Task<UserCart> GetByUserIdAsync(IService<UserCart, string> repository, string id)
     {
         var cart = await repository.GetByIdAsync(id);
 
         return cart;
     }
 
-    private static async Task<bool> CreateAsync(IService<UserCart> repository, UserCart entity)
+    private static async Task<bool> CreateAsync(IService<UserCart, string> repository, UserCart entity)
     {
         return await repository.CreateAsync(entity);
     }
 
-    private static async Task<UserCart> UpdateAsync(IService<UserCart> repository, UserCart entity)
+    private static async Task<UserCart> UpdateAsync(IService<UserCart, string> repository, UserCart entity)
     {
-        var cartToUpdate = await repository.GetByIdAsync(entity.UserId);
+        var cartToUpdate = await repository.GetByIdAsync(entity.UserEmail);
 
         var updatedCart = await repository.UpdateAsync(cartToUpdate);
 
         return updatedCart;
     }
 
-    private static async Task<bool> DeleteByIdAsync(IService<UserCart> repository, Guid id)
+    private static async Task<bool> DeleteByIdAsync(IService<UserCart, string> repository, Guid id)
     {
         return await repository.DeleteByIdAsync(id);
     }

@@ -3,7 +3,7 @@ using IdentityServerProject_Rasmus.Shared.Interfaces;
 
 namespace IdentityServerProject_Rasmus.API.Services;
 
-public class UserCartService : IService<UserCartDto>
+public class UserCartService : IService<UserCartDto, string>
 {
     private readonly HttpClient _httpClient;
 
@@ -20,7 +20,7 @@ public class UserCartService : IService<UserCartDto>
         return result;
     }
 
-    public async Task<UserCartDto> GetByIdAsync(Guid id)
+    public async Task<UserCartDto> GetByIdAsync(string id)
     {
         var response = await _httpClient.GetAsync($"api/carts/{id}");
         var result = await response.Content.ReadFromJsonAsync<UserCartDto>();
@@ -38,7 +38,7 @@ public class UserCartService : IService<UserCartDto>
 
     public async Task<UserCartDto> UpdateAsync(UserCartDto entity)
     {
-        var response = await _httpClient.PutAsJsonAsync($"api/carts/{entity.UserId}", entity);
+        var response = await _httpClient.PutAsJsonAsync($"api/carts/{entity.UserEmail}", entity);
         var result = await response.Content.ReadFromJsonAsync<UserCartDto>();
 
         return result;

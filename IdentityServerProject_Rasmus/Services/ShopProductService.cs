@@ -3,7 +3,7 @@ using IdentityServerProject_Rasmus.Shared.Interfaces;
 
 namespace IdentityServerProject_Rasmus.API.Services;
 
-public class ShopProductService : IService<ShopProductDto>
+public class ShopProductService : IService<ShopProductDto, Guid>
 {
     
     private readonly HttpClient _httpClient;

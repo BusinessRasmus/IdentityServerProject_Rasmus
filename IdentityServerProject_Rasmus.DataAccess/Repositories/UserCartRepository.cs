@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace IdentityServerProject_Rasmus.DataAccess.Repositories;
 
-public class UserCartRepository(MongoDbContext mongoDbContext) : IService<UserCart>
+public class UserCartRepository(MongoDbContext mongoDbContext) : IService<UserCart, string>
 {
 
     private readonly MongoDbContext _mongoDbContext = mongoDbContext;
@@ -19,9 +19,9 @@ public class UserCartRepository(MongoDbContext mongoDbContext) : IService<UserCa
         return await _mongoDbContext.Carts.Find(filter).ToListAsync();
     }
 
-    public async Task<UserCart> GetByIdAsync(Guid id)
+    public async Task<UserCart> GetByIdAsync(string id)
     {
-        var filter = Builders<UserCart>.Filter.Eq(x => x.UserId, id);
+        var filter = Builders<UserCart>.Filter.Eq(x => x.UserEmail, id);
 
         return await _mongoDbContext.Carts.Find(filter).FirstOrDefaultAsync();
     }
@@ -44,7 +44,7 @@ public class UserCartRepository(MongoDbContext mongoDbContext) : IService<UserCa
 
         await _mongoDbContext.Carts.UpdateOneAsync(filter, update);
 
-        return await GetByIdAsync(entity.Id);
+        return await GetByIdAsync(entity.UserEmail);
     }
 
     public async Task<bool> DeleteByIdAsync(Guid id)

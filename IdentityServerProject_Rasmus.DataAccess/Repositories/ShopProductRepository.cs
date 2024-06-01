@@ -8,7 +8,7 @@ using MongoDB.Driver;
 
 namespace IdentityServerProject_Rasmus.DataAccess.Repositories;
 
-public class ShopProductRepository(MongoDbContext mongoDbContext) : IService<ShopProduct>
+public class ShopProductRepository(MongoDbContext mongoDbContext) : IService<ShopProduct, Guid>
 {
     private readonly MongoDbContext _mongoDbContext = mongoDbContext;
 

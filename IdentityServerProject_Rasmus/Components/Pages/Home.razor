@@ -1,52 +1,70 @@
 ﻿@page "/"
 @using IdentityServerProject_Rasmus.Shared.DTOs
 @using IdentityServerProject_Rasmus.Shared.Interfaces
+@using IdentityServerProject_Rasmus.Components.Account
+@using System.Net
+@using IdentityServerProject_Rasmus.API.Services
+@using Microsoft.AspNetCore.Authorization
+@using Mono.TextTemplating
 @rendermode InteractiveServer
-@inject IService<ShopProductDto> ProductService
+@inject IService<ShopProductDto, Guid> ProductService
+@inject IService<UserCartDto, string> UserCartService
+@inject UserInfoService UserInfoService
+@inject AuthenticationStateProvider AuthState
+@attribute [Authorize(Roles = "SupremeUser")]
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Hello</PageTitle>
 
-<h1>Hello, world!</h1>
+<button @onclick="AddToCart">Add thing to cart</button>
+
+
+<h1>Hi, @_loggedInUser!</h1>
 
 Welcome to your new app.
 
 @code
 {
-    public List<ShopProductDto> ShopProducts { get; set; }
+    private string _loggedInUser;
+    public string LoggedInUser
+    {
+        get => _loggedInUser;
+        set
+        {
+            _loggedInUser = value;
+            StateHasChanged();
+        } 
+    }
 
-    protected override async void OnInitialized()
+    public List<ShopProductDto> ShopProducts { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
     {
         var allProducts = await ProductService.GetAllAsync();
+        _loggedInUser = await UserInfoService.GetLoggedInUserEmail();
 
         if (allProducts.ToList().Count < 1)
         {
-            var placeholderProducts = new List<ShopProductDto>
+            var newProduct = new ShopProductDto
             {
-                new ShopProductDto
-                {
-                    Name = "Product 1",
-                    Price = 100,
-                    ImageUrl = "https://via.placeholder.com/150"
-                },
-                new ShopProductDto
-                {
-                    
-                    Name = "Product 2",
-                    Price = 200,
-                    ImageUrl = "https://via.placeholder.com/150"
-                },
-                new ShopProductDto
-                {
-                    Name = "Product 3",
-                    Price = 300,
-                    ImageUrl = "https://via.placeholder.com/150"
-                }
+                Name = "The product",
+                Price = 42,
+                ImageUrl = "https://www.ikea.com/se/en/images/products/vattentrag-box-with-lid__1176294_pe895907_s5.jpg?f=m"
             };
 
-            foreach (var product in placeholderProducts)
-            {
-                await ProductService.CreateAsync(product);
-            }
+            await ProductService.CreateAsync(newProduct);
+
         }
+
+        allProducts = await ProductService.GetAllAsync();
+
+        ShopProducts.AddRange(allProducts);
+    }
+
+    
+
+    private void AddToCart()
+    {
+        UserInfoService.UserCart.Add(ShopProducts.First());
+        UserCartService.UpdateAsync()
     }
 }

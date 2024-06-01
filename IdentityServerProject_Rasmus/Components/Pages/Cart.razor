@@ -1,11 +1,11 @@
 ﻿@page "/cart"
 @using IdentityServerProject_Rasmus.Shared.DTOs
 @using IdentityServerProject_Rasmus.Shared.Interfaces
-@using IdentityServerProject_Rasmus.Services
+@using IdentityServerProject_Rasmus.API.Services
 @rendermode InteractiveServer
-@inject IService<ShopProductDto> ProductService
-@inject IService<UserCartDto> UserCartService
-@inject UserTrackerService UserTrackerService
+@inject IService<ShopProductDto, Guid> ProductService
+@inject IService<UserCartDto, string> UserCartService
+@inject UserInfoService UserInfoService
 @attribute [StreamRendering]
 
 <PageTitle>Cart</PageTitle>
@@ -53,9 +53,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var allProducts = UserTrackerService.UserCart;
+        var userId = await UserInfoService.GetLoggedInUserEmail();
+        var foundCart = await UserCartService.GetByIdAsync(userId);
 
-        UserCart = allProducts;
+        UserCart.AddRange(foundCart.ShopProducts);
+
     }
 
 

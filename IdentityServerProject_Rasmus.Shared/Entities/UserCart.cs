@@ -10,9 +10,9 @@ public class UserCart
     [BsonRepresentation(BsonType.String)]
     public Guid Id { get; set; }
 
-    [BsonElement("userId")]
+    [BsonElement("userEmail")]
     [Required]
-    public Guid UserId { get; set; }
+    public string UserEmail { get; set; }
 
     [BsonElement("shopProducts")]
     public List<ShopProduct> ShopProducts { get; set; }

@@ -1,14 +1,19 @@
 ﻿@page "/Account/Login"
 
 @using System.ComponentModel.DataAnnotations
+@using IdentityServerProject_Rasmus.API.Services
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Identity
 @using IdentityServerProject_Rasmus.Data
+@using IdentityServerProject_Rasmus.Shared.DTOs
+@using IdentityServerProject_Rasmus.Shared.Interfaces
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject ILogger<Login> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
+@inject IService<UserCartDto, string> UserCartService
+@inject UserInfoService UserInfoService
 
 <PageTitle>Log in</PageTitle>
 
@@ -94,6 +99,12 @@
         {
             Logger.LogInformation("User logged in.");
             RedirectManager.RedirectTo(ReturnUrl);
+
+            //------------------- //TODO Se om detta funkar.
+            var userCart = await UserCartService.GetByIdAsync(await UserInfoService.GetLoggedInUserEmail());
+            UserInfoService.UserCart.AddRange(userCart.ShopProducts);
+            //-------------------
+
         }
         else if (result.RequiresTwoFactor)
         {

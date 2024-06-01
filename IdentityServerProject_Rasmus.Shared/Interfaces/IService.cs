@@ -1,10 +1,10 @@
 ﻿namespace IdentityServerProject_Rasmus.Shared.Interfaces;
 
-public interface IService<T> where T : class
+public interface IService<T, TE> where T : class
 {
     public Task<IEnumerable<T>> GetAllAsync();
 
-    public Task<T> GetByIdAsync(Guid id);
+    public Task<T> GetByIdAsync(TE id);
 
     public Task<bool> CreateAsync(T entity);
 

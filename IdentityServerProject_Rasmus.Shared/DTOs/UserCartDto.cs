@@ -7,7 +7,7 @@ public class UserCartDto
 {
     public Guid Id { get; set; }
    
-    public Guid UserId { get; set; }
+    public string UserEmail { get; set; }
   
     public List<ShopProductDto> ShopProducts { get; set; }
 }
