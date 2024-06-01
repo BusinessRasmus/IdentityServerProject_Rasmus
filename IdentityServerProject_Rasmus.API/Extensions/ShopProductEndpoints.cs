@@ -36,7 +36,7 @@ public static class ShopProductEndpoints
         return product;
     }
 
-    public static async Task<bool> CreateAsync(IService<ShopProduct, Guid> repository, ShopProductDto entity)
+    public static async Task<bool> CreateAsync(IService<ShopProduct, Guid> repository, ShopProduct entity)
     {
         var newProduct = new ShopProduct
         {
@@ -50,13 +50,9 @@ public static class ShopProductEndpoints
 
     }
 
-    public static async Task<ShopProduct> UpdateAsync(IService<ShopProduct, Guid> repository, ShopProductDto entity)
+    public static async Task<ShopProduct> UpdateAsync(IService<ShopProduct, Guid> repository, ShopProduct entity)
     {
-        var shopProductToUpdate = await repository.GetByIdAsync(entity.Id);
-
-        var updatedShopProduct = await repository.UpdateAsync(shopProductToUpdate);
-
-        return updatedShopProduct;
+        return await repository.UpdateAsync(entity);
     }
 
     public static async Task<bool> DeleteByIdAsync(IService<ShopProduct, Guid> repository, Guid id)

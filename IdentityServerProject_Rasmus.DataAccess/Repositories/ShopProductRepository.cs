@@ -32,8 +32,6 @@ public class ShopProductRepository(MongoDbContext mongoDbContext) : IService<Sho
     {
         await _mongoDbContext.ShopProducts.InsertOneAsync(entity);
 
-        //TODO Implement guard clauses
-
         return true;
     }
 

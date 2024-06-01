@@ -12,8 +12,8 @@ public class MongoDbContext
     public MongoDbContext()
     {
 
-        var client = new MongoClient("mongodb://localhost:27017"); //TODO Put in connection string
-        _mongoDatabase = client.GetDatabase("TestDb");
+        var client = new MongoClient("mongodb://localhost:27017");
+        _mongoDatabase = client.GetDatabase("IdentityTestDB");
 
     }
 

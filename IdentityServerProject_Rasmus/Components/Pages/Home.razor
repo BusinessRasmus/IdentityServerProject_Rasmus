@@ -14,13 +14,11 @@
 @attribute [Authorize]
 
 <PageTitle>Hello</PageTitle>
-
-<button @onclick="AddToCart">Add thing to cart</button>
-
-
-<h1>Hi, @_loggedInUser!</h1>
-
-Welcome to your new app.
+<div class="justify-content-center align-content-center">
+    <div>
+        <button class="btn btn-outline-primary" @onclick="AddToCart">Add thing to cart</button>
+    </div>
+</div>
 
 @code
 {
@@ -32,7 +30,7 @@ Welcome to your new app.
         {
             _loggedInUser = value;
             StateHasChanged();
-        } 
+        }
     }
 
     public List<ShopProductDto> ShopProducts { get; set; } = new();
@@ -45,11 +43,11 @@ Welcome to your new app.
         if (allProducts.ToList().Count < 1)
         {
             var newProduct = new ShopProductDto
-            {
-                Name = "The product",
-                Price = 42,
-                ImageUrl = "https://www.ikea.com/se/en/images/products/vattentrag-box-with-lid__1176294_pe895907_s5.jpg?f=m"
-            };
+                {
+                    Name = "The product",
+                    Price = 42,
+                    ImageUrl = "https://www.ikea.com/se/en/images/products/vattentrag-box-with-lid__1176294_pe895907_s5.jpg?f=m"
+                };
 
             await ProductService.CreateAsync(newProduct);
 
@@ -60,7 +58,7 @@ Welcome to your new app.
         ShopProducts.AddRange(allProducts);
     }
 
-    
+
 
     private async Task AddToCart()
     {
@@ -69,18 +67,17 @@ Welcome to your new app.
         if (loggedInUserCart == null)
         {
             loggedInUserCart = new UserCartDto
-            {
-                UserEmail = _loggedInUser,
-                ShopProducts = new List<ShopProductDto>()
-            };
+                {
+                    UserEmail = _loggedInUser,
+                    ShopProducts = new List<ShopProductDto>()
+                };
 
             await UserCartService.CreateAsync(loggedInUserCart);
         }
 
         loggedInUserCart.ShopProducts.Add(ShopProducts.First());
-       
+
         await UserCartService.UpdateAsync(loggedInUserCart);
-        }
-        
     }
 }
+

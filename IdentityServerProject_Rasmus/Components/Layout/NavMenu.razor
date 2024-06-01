@@ -16,7 +16,7 @@
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Shop
             </NavLink>
         </div>
 
@@ -49,7 +49,7 @@
                     <form action="Account/Logout" method="post">
                         <AntiforgeryToken />
                         <input type="hidden" name="ReturnUrl" value="@currentUrl" />
-                        <button type="submit" class="nav-link" @onclick="ClearUsercart">
+                        <button type="submit" class="nav-link" href="Account/Login">
                             <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
                         </button>
                     </form>
@@ -89,12 +89,6 @@
     public void Dispose()
     {
         NavigationManager.LocationChanged -= OnLocationChanged;
-    }
-
-    public void ClearUsercart()
-    {
-        if (UserInfoService.UserCart != null)
-            UserInfoService.UserCart.ShopProducts.Clear();
     }
 
 }

@@ -55,6 +55,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
 
+    //För att seed:a databasen med roller.
     using (var scope = app.Services.CreateScope())
     {
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
@@ -71,6 +72,7 @@ if (app.Environment.IsDevelopment())
         }
     }
 
+    //För att seed:a databasen med en "admin".
     using (var scope = app.Services.CreateScope())
     {
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();

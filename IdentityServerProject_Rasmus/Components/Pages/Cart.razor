@@ -2,11 +2,13 @@
 @using IdentityServerProject_Rasmus.Shared.DTOs
 @using IdentityServerProject_Rasmus.Shared.Interfaces
 @using IdentityServerProject_Rasmus.API.Services
+@using Microsoft.AspNetCore.Authorization
 @rendermode InteractiveServer
 @inject IService<ShopProductDto, Guid> ProductService
 @inject IService<UserCartDto, string> UserCartService
 @inject UserInfoService UserInfoService
 @attribute [StreamRendering]
+@attribute [Authorize]
 
 <PageTitle>Cart</PageTitle>
 
@@ -19,7 +21,6 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Id</th>
                         <th>Name</th>
                         <th>Price</th>
                         <th>Image</th>
@@ -31,13 +32,11 @@
                 {
                     <Virtualize Items="UserCart">
                         <tr>
-                            <td>@context.Id</td>
                             <td>@context.Name</td>
                             <td>@context.Price</td>
-                            <td><img src="@context.ImageUrl" alt="(@context.Name+'jpg')" width="50" height="50"/></td>
+                            <td><img src="@context.ImageUrl" alt="(@context.Name+'jpg')" width="60" height="60"/></td>
                             <td>
-                                <button class="btn btn-primary">Edit</button>
-                                <button class="btn btn-danger">Delete</button>
+                                    <button class="btn btn-danger" @onclick="() => DeleteProduct(context.Id)">Delete</button>
                             </td>
                         </tr>
                     </Virtualize>
@@ -74,5 +73,17 @@
 
     }
 
+    private async Task DeleteProduct(Guid productId)
+    {
+        var removeAtIndex = UserCart.IndexOf(UserCart.FirstOrDefault(d => d.Id == productId));
+        UserCart.RemoveAt(removeAtIndex);
+
+        var foundCart = await UserCartService.GetByIdAsync(await UserInfoService.GetLoggedInUserEmail());
+
+        foundCart.ShopProducts = UserCart;
+
+        await UserCartService.UpdateAsync(foundCart);
+
+    }
 
 }

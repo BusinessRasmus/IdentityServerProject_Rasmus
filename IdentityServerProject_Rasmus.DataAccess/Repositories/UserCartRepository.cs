@@ -30,8 +30,6 @@ public class UserCartRepository(MongoDbContext mongoDbContext) : IService<UserCa
     {
         await _mongoDbContext.Carts.InsertOneAsync(entity);
 
-        //TODO Implement guard clauses
-
         return true;
     }
 

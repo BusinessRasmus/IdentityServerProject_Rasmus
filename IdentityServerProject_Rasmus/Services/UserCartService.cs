@@ -1,5 +1,6 @@
 ﻿using IdentityServerProject_Rasmus.Shared.DTOs;
 using IdentityServerProject_Rasmus.Shared.Interfaces;
+using Microsoft.IdentityModel.Tokens;
 
 namespace IdentityServerProject_Rasmus.API.Services;
 
@@ -22,6 +23,12 @@ public class UserCartService : IService<UserCartDto, string>
 
     public async Task<UserCartDto> GetByIdAsync(string id)
     {
+        if (id.IsNullOrEmpty())
+        {
+            return null;
+        }
+
+
         var response = await _httpClient.GetAsync($"api/carts/{id}");
         var result = await response.Content.ReadFromJsonAsync<UserCartDto>();
 
